@@ -1,0 +1,95 @@
+version: v1
+description: Azure Resource Test
+
+parameters:
+  TenantID:
+    description: Your Azure Tenant ID
+  ApplicationID:
+    description: The Application (Client) ID of your Service Principal
+  DeploymentName:
+    description: The name for this particular deployment
+    default: test-deploy
+  ResourceGroupName:
+    description: The resource group that this deployment will be associated with
+  templateFilename:
+    description: The relative path to the partciular ARM template you want to run within the repository
+    default: LAB/template/test.json
+  RepoURL:
+    description: The URL to the git repository that contains the ARM template file
+    default: https://github.com/LynxPantera/nebula-example
+  StorageAccountName:
+    description: The name to use for the storage account. This must be unique and only contains lowercase letters and numbers
+  gitBranch:
+    description: The git branch
+    default: master
+
+steps:
+steps:
+- name: introduction
+  image: projectnebula/core
+  input: 
+  -  echo "-------------- INTRODUCTION --------------"
+  -  echo "Let's see what we can do with them."
+- name: parameters
+  image: projectnebula/core
+  dependsOn: introduction
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Tenant ID ?"
+  -  TENANTID=$(ni get -p {.TenantID})
+  -  echo ""
+  -  echo "Your name is ${TENANTID}" 
+  spec: 
+    name: !Parameter TenantID
+- name: parameters
+  image: projectnebula/core
+  dependsOn: introduction
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Application ID ?"
+  -  APPLICATIONID=$(ni get -p {.ApplicationID})
+  -  echo ""
+  -  echo "Your name is ${APPLICATIONID}" 
+  spec: 
+    name: !Parameter ApplicationID
+- name: parameters
+  image: projectnebula/core
+  dependsOn: introduction
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Ressource Group Name ?"
+  -  RGNAME=$(ni get -p {.ResourceGroupName})
+  -  echo ""
+  -  echo "Your name is ${RGNAME}" 
+  spec: 
+    name: !Parameter ResourceGroupName
+- name: parameters
+  image: projectnebula/core
+  dependsOn: introduction
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Ressource Group Name ?"
+  -  SANAME=$(ni get -p {.StorageAccountName})
+  -  echo ""
+  -  echo "Your name is ${SANAME}"
+  spec: 
+    name: !Parameter StorageAccountName
+
+- name: azureresourcemanager-deployer
+  image: projectnebula/azureresourcemanager-deployer:latest
+  spec:
+    azure:
+      tenantID: !Parameter TenantID
+      username: !Parameter ApplicationID
+      cert:
+        $type: Secret
+        name: cert
+    deploymentName: !Parameter DeploymentName
+    resourceGroup: !Parameter ResourceGroupName
+    templateFile: !Parameter templateFilename
+    git:
+      name: repo
+      branch: !Parameter gitBranch
+      repository: !Parameter RepoURL
+    parameters:
+      storageName: !Parameter StorageAccountName
