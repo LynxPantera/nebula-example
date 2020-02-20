@@ -24,7 +24,6 @@ parameters:
     default: master
 
 steps:
-steps:
 - name: introduction
   image: projectnebula/core
   input: 
