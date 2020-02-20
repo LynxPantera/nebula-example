@@ -29,7 +29,7 @@ steps:
   input: 
   -  echo "-------------- INTRODUCTION --------------"
   -  echo "Let's see what we can do with them."
-- name: parameters
+- name: parameters1
   image: projectnebula/core
   dependsOn: introduction
   input: 
@@ -40,9 +40,9 @@ steps:
   -  echo "Your name is ${TENANTID}" 
   spec: 
     name: !Parameter TenantID
-- name: parameters
+- name: parameters2
   image: projectnebula/core
-  dependsOn: introduction
+  dependsOn: parameters1
   input: 
   -  echo "-------------- PARAMETERS --------------"
   -  echo "Application ID ?"
@@ -51,9 +51,9 @@ steps:
   -  echo "Your name is ${APPLICATIONID}" 
   spec: 
     name: !Parameter ApplicationID
-- name: parameters
+- name: parameters3
   image: projectnebula/core
-  dependsOn: introduction
+  dependsOn: parameters2
   input: 
   -  echo "-------------- PARAMETERS --------------"
   -  echo "Ressource Group Name ?"
@@ -62,9 +62,9 @@ steps:
   -  echo "Your name is ${RGNAME}" 
   spec: 
     name: !Parameter ResourceGroupName
-- name: parameters
+- name: parameters4
   image: projectnebula/core
-  dependsOn: introduction
+  dependsOn: parameters3
   input: 
   -  echo "-------------- PARAMETERS --------------"
   -  echo "Ressource Group Name ?"
@@ -76,6 +76,7 @@ steps:
 
 - name: azureresourcemanager-deployer
   image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: parameters4
   spec:
     azure:
       tenantID: !Parameter TenantID
