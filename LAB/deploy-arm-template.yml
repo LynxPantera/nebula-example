@@ -59,7 +59,7 @@ steps:
 
 - name: azureresourcemanager-deployer
   image: projectnebula/azureresourcemanager-deployer:latest
-  dependsOn: parameters4
+  dependsOn: parameters2
   spec:
     azure:
       tenantID:
