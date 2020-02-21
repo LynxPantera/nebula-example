@@ -3,10 +3,6 @@ description: Azure Resource Test
 
 
 parameters:
-  TenantID:
-    description: Your Azure Tenant ID
-  ApplicationID:
-    description: The Application (Client) ID of your Service Principal
   DeploymentName:
     description: The name for this particular deployment
     default: test-deploy
@@ -37,34 +33,6 @@ steps:
   dependsOn: introduction
   input: 
   -  echo "-------------- PARAMETERS --------------"
-  -  echo "Tenant ID ?"
-  -  TENANTID=$(ni get -p {.TenantID})
-  -  echo ""
-  -  echo "Your tenant ID is ${TENANTID}" 
-  spec:
-    TenantID:
-      $type: Parameter
-      name: TenantID
-
-- name: parameters2
-  image: projectnebula/core
-  dependsOn: parameters1
-  input: 
-  -  echo "-------------- PARAMETERS --------------"
-  -  echo "Application ID ?"
-  -  APPLICATIONID=$(ni get -p {.ApplicationID})
-  -  echo ""
-  -  echo "Your Application ID is ${APPLICATIONID}" 
-  spec:
-    ApplicationID:
-      $type: Parameter
-      name: ApplicationID
-
-- name: parameters3
-  image: projectnebula/core
-  dependsOn: parameters2
-  input: 
-  -  echo "-------------- PARAMETERS --------------"
   -  echo "Ressource Group Name ?"
   -  RGNAME=$(ni get -p {.ResourceGroupName})
   -  echo ""
@@ -74,9 +42,9 @@ steps:
       $type: Parameter
       name: ResourceGroupName
 
-- name: parameters4
+- name: parameters2
   image: projectnebula/core
-  dependsOn: parameters3
+  dependsOn: parameters1
   input: 
   -  echo "-------------- PARAMETERS --------------"
   -  echo "Storage Account Name ?"
@@ -94,8 +62,12 @@ steps:
   dependsOn: parameters4
   spec:
     azure:
-      tenantID: !Parameter TenantID
-      username: !Parameter ApplicationID
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
       cert:
         $type: Secret
         name: cert
