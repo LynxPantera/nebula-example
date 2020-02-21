@@ -55,25 +55,11 @@ steps:
     StorageAccountName:
       $type: Parameter
       name: StorageAccountName
-
-- name: parameters3
-  image: projectnebula/core
-  dependsOn: parameters2
-  input: 
-  -  echo "-------------- PARAMETERS --------------"
-  -  echo "Subscription ID ?"
-  -  SUBID=$(ni get -p {.SubscriptionID})
-  -  echo ""
-  -  echo "Your Subscription ID is ${SUBID}"
-  spec:
-    SubscriptionID:
-      $type: Parameter
-      name: SubscriptionID
       
 
 - name: azureresourcemanager-deployer
   image: projectnebula/azureresourcemanager-deployer:latest
-  dependsOn: parameters3
+  dependsOn: parameters2
   spec:
     azure:
       tenantID:
@@ -94,4 +80,3 @@ steps:
       repository: !Parameter RepoURL
     parameters:
       storageName: !Parameter StorageAccountName
-      subscriptionID: !Parameter SubscriptionID

@@ -14,7 +14,6 @@
 			"apiVersion": "2019-04-01",
 			"name": "[parameters('storageName')]",
 			"location": "westeurope",
-			"subscriptionId": "[parameters('subscriptionID')]",
 			"sku": {
 				"name": "Standard_LRS"
 			},
