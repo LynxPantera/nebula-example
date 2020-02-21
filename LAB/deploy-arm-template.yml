@@ -32,7 +32,7 @@ steps:
   -  echo "-------------- INTRODUCTION --------------"
   -  echo "Let's see what we can do with them."
 
-- name: parameters1
+- name: parameters
   image: projectnebula/core
   dependsOn: introduction
   input: 
@@ -40,20 +40,21 @@ steps:
   -  echo "Tenant ID ?"
   -  TENANTID=$(ni get -p {.TenantID})
   -  echo ""
-  -  echo "Your name is ${TENANTID}" 
+  -  echo "Your tenant ID is ${TENANTID}" 
   spec:
-    $type: Parameter
-    name: TenantID
+    TenantID:
+      $type: Parameter
+      name: TenantID
 
 - name: parameters2
   image: projectnebula/core
-  dependsOn: parameters1
+  dependsOn: parameters
   input: 
   -  echo "-------------- PARAMETERS --------------"
   -  echo "Application ID ?"
   -  APPLICATIONID=$(ni get -p {.ApplicationID})
   -  echo ""
-  -  echo "Your name is ${APPLICATIONID}" 
+  -  echo "Your Application ID is ${APPLICATIONID}" 
   spec:
     $type: Parameter
     name: ApplicationID
@@ -66,7 +67,7 @@ steps:
   -  echo "Ressource Group Name ?"
   -  RGNAME=$(ni get -p {.ResourceGroupName})
   -  echo ""
-  -  echo "Your name is ${RGNAME}" 
+  -  echo "Your Ressource Group is ${RGNAME}" 
   spec:
     $type: Parameter
     name: ResourceGroupName
@@ -76,10 +77,10 @@ steps:
   dependsOn: parameters3
   input: 
   -  echo "-------------- PARAMETERS --------------"
-  -  echo "Ressource Group Name ?"
+  -  echo "Storage Account Name ?"
   -  SANAME=$(ni get -p {.StorageAccountName})
   -  echo ""
-  -  echo "Your name is ${SANAME}"
+  -  echo "Your Storage Account is ${SANAME}"
   spec:
     $type: Parameter
     name: StorageAccountName
