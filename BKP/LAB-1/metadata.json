@@ -1,0 +1,7 @@
+{
+	"name": "deploy-arm-template",
+	"version": "1.0.0",
+	"author": "LynxPantera",
+	"summary": "Deploy a Storage",
+	"description": "This is a deployement test"
+}
