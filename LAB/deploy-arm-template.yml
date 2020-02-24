@@ -72,8 +72,8 @@ steps:
         $type: Secret
         name: cert
     deploymentName: !Parameter DeploymentName
-    #resourceGroup: !Parameter ResourceGroupName
-    location: westeurope
+    resourceGroup: !Parameter ResourceGroupName
+    #location: westeurope
     templateFile: !Parameter templateFilename
     git:
       name: repo
