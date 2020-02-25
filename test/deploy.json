@@ -5,7 +5,7 @@
       {
         "type": "Microsoft.Storage/storageAccounts",
         "apiVersion": "2019-04-01",
-        "name": "nebulatest",
+        "name": "sanebulatest",
         "location": "centralus",
         "sku": {
           "name": "Standard_LRS"
