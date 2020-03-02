@@ -68,7 +68,7 @@ steps:
       username:
         $type: Secret
         name: username
-      cert:
+      password:
         $type: Secret
         name: cert
     deploymentName: !Parameter DeploymentName
