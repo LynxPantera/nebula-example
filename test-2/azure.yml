@@ -17,6 +17,7 @@ steps:
         name: cert
     deploymentName: nebula-test
     templateFile: test-2/deploy.json
+    location: centralus
     git:
       name: NebulaTest1
       branch: master
