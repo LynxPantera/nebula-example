@@ -17,7 +17,7 @@ steps:
         name: cert
     deploymentName: nebula-test
     resourceGroup: rg-az-lab-nebula-test
-    templateFile: test/deploy.json
+    templateFile: test-1/deploy.json
     git:
       name: NebulaTest1
       branch: master

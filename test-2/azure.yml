@@ -16,7 +16,7 @@ steps:
         $type: Secret
         name: cert
     deploymentName: nebula-test
-    templateFile: test/deploy.json
+    templateFile: test-2/deploy.json
     git:
       name: NebulaTest1
       branch: master
