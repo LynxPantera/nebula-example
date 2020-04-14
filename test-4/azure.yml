@@ -55,7 +55,7 @@ steps:
       branch: master
       repository: https://github.com/LynxPantera/nebula-example/
     parameters:
-      ressource_name: !Parameter ressource_name
+      ressource_name: !Fn.concat [rg-az-lab-, !Parameter ressource_name]
       location: !Parameter location
 
 

@@ -15,7 +15,7 @@
           "type": "Microsoft.Resources/resourceGroups",
           "apiVersion": "2018-05-01",
           "location": "[parameters('location')]",
-          "name": "rg-az-lab-[parameters('ressource_name')]",
+          "name": "[parameters('ressource_name')]",
           "properties": {}
       }
   ],
