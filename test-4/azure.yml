@@ -74,7 +74,7 @@ steps:
         $type: Secret
         name: cert
     deploymentName: nebula-test
-    templateFile: test-3/nsg/deploy.json
+    templateFile: test-3/sn/deploy.json
     resourceGroup: !Parameter ressource_name
     git:
       name: NebulaTest1
