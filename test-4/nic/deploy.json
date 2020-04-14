@@ -1,0 +1,48 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "nic_name": {
+          "type": "string"
+      },
+      "location": {
+          "type": "string"
+      },
+      "subnet_id": {
+          "type": "string"
+      },
+      "allocation_method": {
+          "type": "string"
+      },
+      "nsg_id": {
+          "type": "string"
+      }
+  },
+  "resources": [
+      {
+          "name": "[parameters('nic_name')]",
+          "type": "Microsoft.Network/networkInterfaces",
+          "apiVersion": "2019-07-01",
+          "location": "[parameters('location')]",
+          "dependsOn": [],
+          "properties": {
+              "ipConfigurations": [
+                  {
+                      "name": "ipconfig1",
+                      "properties": {
+                          "privateIpAddressVersion": "IPv4",
+                          "privateIPAllocationMethod": "[parameters('allocation_method')]",
+                          "subnet": {
+                              "id": "[parameters('subnet_id')]"
+                          }
+                      }
+                  }
+              ],
+              "networkSecurityGroup": {
+                  "id": "[parameters('nsg_id')]"
+              }
+          },
+          "tags": {}
+      }
+  ]
+}
