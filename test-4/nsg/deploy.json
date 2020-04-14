@@ -15,7 +15,31 @@
           "type": "Microsoft.Network/networkSecurityGroups",
           "name": "[parameters('nsg_name')]",
           "location": "[parameters('location')]",
-          "tags": {}
+          "tags": {},
+          "properties": {
+            "securityRules": [
+                {
+                    "name": "Allow_castelis",
+                    "properties": {
+                        "access": "Allow",
+                        "destinationAddressPrefix": "*",
+                        "destinationAddressPrefixes": [],
+                        "destinationPortRanges": [
+                          "80",
+                          "443"
+                        ],
+                        "direction": "Inbound",
+                        "priority": 100,
+                        "protocol": "*",
+                        "sourceAddressPrefixes": [
+                          "159.180.243.190"
+                        ],
+                        "sourcePortRange": "*",
+                        "sourcePortRanges": []
+                    }
+                }
+            ]
+          }
       }
   ]
 }

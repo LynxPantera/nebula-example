@@ -76,8 +76,34 @@ steps:
         name: cert
     deploymentName: nebula-test
     templateFile: test-4/sn/deploy.json
-    resourceGroup: !Parameter ressource_name
+    resourceGroup: rg-az-lab-rlx-author
     git:
       name: NebulaTest1
       branch: master
       repository: https://github.com/LynxPantera/nebula-example/
+
+
+- name: azureresourcemanager-deployer-3
+  image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: azureresourcemanager-deployer-2
+  spec:
+    azure:
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
+      password:
+        $type: Secret
+        name: cert
+    deploymentName: nebula-test
+    templateFile: test-4/nsg/deploy.json
+    resourceGroup: !Fn.concat [rg-az-lab-, !Parameter ressource_name]
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/
+    parameters:
+      location: !Parameter location
+      nsg_name: !Fn.concat [nsg-az-lab-, !Parameter ressource_name]
