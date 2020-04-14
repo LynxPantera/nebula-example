@@ -1,7 +1,24 @@
 version: v1
 description: Azure Resource Test
 
+parameters:
+  group_name:
+    description: The ressource groupe name
+
 steps:
+- name: param1
+  image: projectnebula/core
+  dependsOn: param1
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Ressource Group Name ?"
+  -  RGNAME=$(ni get -p {.group_name})
+  -  echo ""
+  -  echo "Your Storage Account is ${RGNAME}"
+  spec:
+    group_name:
+      $type: Parameter
+      name: group_name
 - name: azureresourcemanager-deployer-1
   image: projectnebula/azureresourcemanager-deployer:latest
   spec:
@@ -16,8 +33,30 @@ steps:
         $type: Secret
         name: cert
     deploymentName: nebula-test
-    templateFile: test-3/deploy.json
+    templateFile: test-3/step1/deploy.json
     location: centralus
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/
+    parameters:
+      groupName: !Parameter group_name
+- name: azureresourcemanager-deployer-2
+  image: projectnebula/azureresourcemanager-deployer:latest
+  spec:
+    azure:
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
+      password:
+        $type: Secret
+        name: cert
+    deploymentName: nebula-test
+    templateFile: test-3/step2/deploy.json
+    resourceGroup: !Parameter group_name
     git:
       name: NebulaTest1
       branch: master
