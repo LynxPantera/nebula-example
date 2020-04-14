@@ -5,7 +5,7 @@
 		"ressource_name": {
 			"type": "string"
 		},
-    "region": {
+    "location": {
 			"type": "string"
 		}
   },
@@ -14,7 +14,7 @@
       {
           "type": "Microsoft.Resources/resourceGroups",
           "apiVersion": "2018-05-01",
-          "location": "[parameters('region')]",
+          "location": "[parameters('location')]",
           "name": "rg-az-lab-[parameters('ressource_name')]",
           "properties": {}
       }
