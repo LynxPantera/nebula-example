@@ -1,0 +1,82 @@
+version: v1
+description: Azure Resource Test
+
+parameters:
+  ressource_name:
+    description: The ressource name of all ressources
+  location:
+    description: The location of the all ressource group
+
+steps:
+- name: param1
+  image: projectnebula/core
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Ressource Name ?"
+  -  RNAME=$(ni get -p {.ressource_name})
+  -  echo ""
+  -  echo "Your Storage Account is ${RNAME}"
+  spec:
+    ressource_name:
+      $type: Parameter
+      name: ressource_name
+- name: param2
+  image: projectnebula/core
+  dependsOn: param1
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Which location ?"
+  -  LOCATION=$(ni get -p {.location})
+  -  echo ""
+  -  echo "Your Storage Account is ${LOCATION}"
+  spec:
+    location:
+      $type: Parameter
+      name: location
+- name: azureresourcemanager-deployer-1
+  image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: param2
+  spec:
+    azure:
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
+      password:
+        $type: Secret
+        name: cert
+    deploymentName: nebula-test
+    templateFile: test-3/rg/deploy.json
+    location: centralus
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/
+    parameters:
+      ressource_name: !Parameter ressource_name
+
+
+
+- name: azureresourcemanager-deployer-2
+  image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: azureresourcemanager-deployer-1
+  spec:
+    azure:
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
+      password:
+        $type: Secret
+        name: cert
+    deploymentName: nebula-test
+    templateFile: test-3/nsg/deploy.json
+    resourceGroup: !Parameter ressource_name
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/

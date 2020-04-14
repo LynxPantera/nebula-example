@@ -1,0 +1,34 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnet_name": {
+            "type": "string",
+            "defaultValue": "vn-az-we-lab"
+        },
+        "subnet_name": {
+            "type": "string",
+            "defaultValue": "sn-az-lab-rlx-nebula"
+        },
+        "subnet_address": {
+            "type": "string",
+            "defaultValue": "10.70.98.0/24"
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "rg-az-lab-rlx-author"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2018-04-01",
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[concat(parameters('vnet_name'), '/', parameters('subnet_name'))]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "addressPrefix": "[parameters('subnet_address')]"
+            }
+        }
+    ],
+    "outputs": {}
+}

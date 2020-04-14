@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "nsg_name": {
+          "type": "string"
+      },
+      "location": {
+          "type": "string"
+      }
+  },
+  "resources": [
+      {
+          "apiVersion": "2019-02-01",
+          "type": "Microsoft.Network/networkSecurityGroups",
+          "name": "[parameters('nsg_name')]",
+          "location": "[parameters('location')]",
+          "tags": {}
+      }
+  ]
+}
