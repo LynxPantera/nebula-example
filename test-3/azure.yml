@@ -1,0 +1,24 @@
+version: v1
+description: Azure Resource Test
+
+steps:
+- name: azureresourcemanager-deployer-1
+  image: projectnebula/azureresourcemanager-deployer:latest
+  spec:
+    azure:
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
+      password:
+        $type: Secret
+        name: cert
+    deploymentName: nebula-test
+    templateFile: test-3/deploy.json
+    location: centralus
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/
