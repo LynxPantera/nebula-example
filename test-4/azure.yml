@@ -48,7 +48,7 @@ steps:
         $type: Secret
         name: cert
     deploymentName: nebula-test
-    templateFile: test-3/rg/deploy.json
+    templateFile: test-4/rg/deploy.json
     location: centralus
     git:
       name: NebulaTest1
@@ -74,7 +74,7 @@ steps:
         $type: Secret
         name: cert
     deploymentName: nebula-test
-    templateFile: test-3/sn/deploy.json
+    templateFile: test-4/sn/deploy.json
     resourceGroup: !Parameter ressource_name
     git:
       name: NebulaTest1
