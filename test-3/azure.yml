@@ -8,7 +8,6 @@ parameters:
 steps:
 - name: param1
   image: projectnebula/core
-  dependsOn: param1
   input: 
   -  echo "-------------- PARAMETERS --------------"
   -  echo "Ressource Group Name ?"
@@ -21,6 +20,7 @@ steps:
       name: group_name
 - name: azureresourcemanager-deployer-1
   image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: param1
   spec:
     azure:
       tenantID:
@@ -43,6 +43,7 @@ steps:
       groupName: !Parameter group_name
 - name: azureresourcemanager-deployer-2
   image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: azureresourcemanager-deployer-1
   spec:
     azure:
       tenantID:
