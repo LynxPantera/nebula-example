@@ -137,7 +137,7 @@ steps:
       repository: https://github.com/LynxPantera/nebula-example/
     parameters:
       location: !Parameter location
-      ip_name: !Fn.concat [ip-az-lab-, !Parameter ressource_name, -01]
+      ip_name: !Fn.concat [ip-az-lab-, !Parameter ressource_name]
 
 
 
@@ -156,7 +156,7 @@ steps:
         $type: Secret
         name: cert
     deploymentName: nebula-test
-    templateFile: test-4/ip_pub/deploy.json
+    templateFile: test-4/nic/deploy.json
     resourceGroup: !Fn.concat [rg-az-lab-, !Parameter ressource_name]
     git:
       name: NebulaTest1
