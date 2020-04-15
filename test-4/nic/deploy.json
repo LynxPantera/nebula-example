@@ -8,13 +8,7 @@
       "location": {
           "type": "string"
       },
-      "subnet_id": {
-          "type": "string"
-      },
-      "allocation_method": {
-          "type": "string"
-      },
-      "nsg_id": {
+      "sub_id": {
           "type": "string"
       }
   },
@@ -31,18 +25,22 @@
                       "name": "ipconfig1",
                       "properties": {
                           "privateIpAddressVersion": "IPv4",
-                          "privateIPAllocationMethod": "[parameters('allocation_method')]",
+                          "privateIPAllocationMethod": "Dynamic",
+                          "publicIPAddress": {
+                            "id": "concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('nic_name'), '/providers/Microsoft.Network/publicIPAddresses/ip-az-lab-', parameters('nic_name'))"
+                          },
                           "subnet": {
-                              "id": "[parameters('subnet_id')]"
+                            "id": "concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-rlx-author', '/providers/Microsoft.Network/virtualNetworks/vn-az-we-lab/subnets/sn-az-lab-rlx-nebula')"
                           }
                       }
                   }
               ],
               "networkSecurityGroup": {
-                  "id": "[parameters('nsg_id')]"
+                "id": "concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('nic_name'), '/providers/Microsoft.Network/networkSecurityGroups/nsg-az-lab-', parameters('nic_name'))"
               }
           },
           "tags": {}
       }
   ]
 }
+

@@ -36,7 +36,7 @@ steps:
 
 
 
-- name: azureresourcemanager-deployer-1
+- name: arm-deployer-1
   image: projectnebula/azureresourcemanager-deployer:latest
   dependsOn: param2
   spec:
@@ -63,9 +63,9 @@ steps:
 
 
 
-- name: azureresourcemanager-deployer-2
+- name: arm-deployer-2
   image: projectnebula/azureresourcemanager-deployer:latest
-  dependsOn: azureresourcemanager-deployer-1
+  dependsOn: arm-deployer-1
   spec:
     azure:
       tenantID:
@@ -87,9 +87,9 @@ steps:
 
 
 
-- name: azureresourcemanager-deployer-3
+- name: arm-deployer-3
   image: projectnebula/azureresourcemanager-deployer:latest
-  dependsOn: azureresourcemanager-deployer-2
+  dependsOn: arm-deployer-2
   spec:
     azure:
       tenantID:
@@ -114,3 +114,56 @@ steps:
 
 
 
+- name: arm-deployer-4
+  image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: arm-deployer-3
+  spec:
+    azure:
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
+      password:
+        $type: Secret
+        name: cert
+    deploymentName: nebula-test
+    templateFile: test-4/ip_pub/deploy.json
+    resourceGroup: !Fn.concat [rg-az-lab-, !Parameter ressource_name]
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/
+    parameters:
+      location: !Parameter location
+      ip_name: !Fn.concat [ip-az-lab-, !Parameter ressource_name, -01]
+
+
+
+- name: arm-deployer-5
+  image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: arm-deployer-4
+  spec:
+    azure:
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
+      password:
+        $type: Secret
+        name: cert
+    deploymentName: nebula-test
+    templateFile: test-4/ip_pub/deploy.json
+    resourceGroup: !Fn.concat [rg-az-lab-, !Parameter ressource_name]
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/
+    parameters:
+      location: !Parameter location
+      nic_name: !Fn.concat [ip-az-lab-, !Parameter ressource_name]
+      $type: Secret
+        name: sub_id
