@@ -27,16 +27,16 @@
                           "privateIpAddressVersion": "IPv4",
                           "privateIPAllocationMethod": "Dynamic",
                           "publicIPAddress": {
-                            "id": "concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('nic_name'), '/providers/Microsoft.Network/publicIPAddresses/ip-az-lab-', parameters('nic_name'))"
+                            "id": "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('nic_name'), '/providers/Microsoft.Network/publicIPAddresses/ip-az-lab-', parameters('nic_name'))]"
                           },
                           "subnet": {
-                            "id": "concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-rlx-author', '/providers/Microsoft.Network/virtualNetworks/vn-az-we-lab/subnets/sn-az-lab-rlx-nebula')"
+                            "id": "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-rlx-author', '/providers/Microsoft.Network/virtualNetworks/vn-az-we-lab/subnets/sn-az-lab-rlx-nebula')]"
                           }
                       }
                   }
               ],
               "networkSecurityGroup": {
-                "id": "concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('nic_name'), '/providers/Microsoft.Network/networkSecurityGroups/nsg-az-lab-', parameters('nic_name'))"
+                "id": "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('nic_name'), '/providers/Microsoft.Network/networkSecurityGroups/nsg-az-lab-', parameters('nic_name'))]"
               }
           },
           "tags": {}

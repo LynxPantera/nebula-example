@@ -165,5 +165,6 @@ steps:
     parameters:
       location: !Parameter location
       nic_name: !Fn.concat [ip-az-lab-, !Parameter ressource_name]
-      $type: Secret
+      sub_id:
+        $type: Secret
         name: sub_id
