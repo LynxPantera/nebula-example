@@ -246,6 +246,9 @@ steps:
       data_size: !Parameter data_size
       zone: !Parameter zone
       nic_name: !Fn.concat [nic-az-lab-, !Parameter ressource_name]
+      sub_id:
+        $type: Secret
+        name: sub_id
       user:
         $type: Secret
         name: user
