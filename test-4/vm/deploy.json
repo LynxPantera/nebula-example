@@ -98,9 +98,9 @@
                   "copy": [
                       {
                           "name": "dataDisks",
-                          "count": "1",
+                          "count": 1,
                           "input": {
-                              "lun": "0",
+                              "lun": 0,
                               "createOption": "attach",
                               "caching": "ReadWrite",
                               "writeAcceleratorEnabled": false,
