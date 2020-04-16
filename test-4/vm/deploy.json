@@ -5,6 +5,9 @@
       "sub_id": {
         "type": "string"
       },
+      "ressource_name": {
+        "type": "string"
+      },
       "data_name": {
         "type": "string"
       },
