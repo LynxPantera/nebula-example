@@ -81,8 +81,8 @@
           "location": "[parameters('location')]",
           "dependsOn": [
               "managedDiskResources",
-              "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('ressource_name'), '/providers/Microsoft.Network/networkInterfaces/', parameters('nic_name'))]",
-              "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('ressource_name'), '/providers/Microsoft.Storage/storageAccounts/', parameters('diag_name'))]"
+              "[concat('Microsoft.Network/networkInterfaces/', parameters('nic_name'))]",
+              "[concat('Microsoft.Storage/storageAccounts/', parameters('diag_name'))]"
           ],
           "properties": {
               "hardwareProfile": {
@@ -112,7 +112,7 @@
                               "writeAcceleratorEnabled": false,
                               "diskSizeGB": null,
                               "managedDisk": {
-                                  "id": "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('ressource_name'), '/providers/Microsoft.Compute/disks/', parameters('data_name'))]",
+                                  "id": "[resourceId('Microsoft.Compute/disks', parameters('nic_name'))]",
                                   "storageAccountType": null,
                                   "diskEncryptionSet": {
                                       "id": null
@@ -125,7 +125,7 @@
               "networkProfile": {
                   "networkInterfaces": [
                       {
-                          "id": "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('ressource_name'), '/providers/Microsoft.Network/networkInterfaces/', parameters('nic_name'))]"
+                          "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
                       }
                   ]
               },
