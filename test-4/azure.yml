@@ -33,12 +33,51 @@ steps:
     location:
       $type: Parameter
       name: location
+- name: param3
+  image: projectnebula/core
+  dependsOn: param2
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Which vm size ?"
+  -  VMSIZE=$(ni get -p {.vm_size})
+  -  echo ""
+  -  echo "Your Storage Account is ${VMSIZE}"
+  spec:
+    vm_size:
+      $type: Parameter
+      name: vm_size
+- name: param4
+  image: projectnebula/core
+  dependsOn: param3
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Which zone ?"
+  -  ZONE=$(ni get -p {.zone})
+  -  echo ""
+  -  echo "Your Storage Account is ${ZONE}"
+  spec:
+    zone:
+      $type: Parameter
+      name: zone
+- name: param5
+  image: projectnebula/core
+  dependsOn: param4
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Which data size ?"
+  -  DATASIZE=$(ni get -p {.data_size})
+  -  echo ""
+  -  echo "Your Storage Account is ${DATASIZE}"
+  spec:
+    data_size:
+      $type: Parameter
+      name: data_size
 
 
 
 - name: arm-deployer-1
   image: projectnebula/azureresourcemanager-deployer:latest
-  dependsOn: param2
+  dependsOn: param5
   spec:
     azure:
       tenantID:
@@ -169,3 +208,41 @@ steps:
       sub_id:
         $type: Secret
         name: sub_id
+
+
+       
+- name: arm-deployer-6
+  image: projectnebula/azureresourcemanager-deployer:latest
+  dependsOn: arm-deployer-5
+  spec:
+    azure:
+      tenantID:
+        $type: Secret
+        name: tenantID
+      username:
+        $type: Secret
+        name: username
+      password:
+        $type: Secret
+        name: cert
+    deploymentName: nebula-test
+    templateFile: test-4/vm/deploy.json
+    resourceGroup: !Fn.concat [rg-az-lab-, !Parameter ressource_name]
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/
+    parameters:
+      location: !Parameter location
+      vm_name: !Fn.concat [vm-az-lab-, !Parameter ressource_name]
+      data_name: !Fn.concat [data-az-lab-, !Parameter ressource_name]
+      vm_size: !Parameter vm_size
+      data_size: !Parameter data_size
+      zone: !Parameter zone
+      nic_name: !Fn.concat [nic-az-lab-, !Parameter ressource_name]
+      user:
+        $type: Secret
+        name: user
+      password:
+        $type: Secret
+        name: user

@@ -1,0 +1,143 @@
+{
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "data_name": {
+        "type": "string"
+      },
+      "location": {
+        "type": "string"
+      },
+      "data_size": {
+        "type": "int"
+      },
+      "zone": {
+        "type": "string"
+      },
+      "diag_name": {
+        "type": "string",
+        "defaultValue": "[concat('diag', uniqueString(utcNow()))]"
+      },
+      "vm_name": {
+        "type": "string"
+      },
+      "vm_size": {
+        "type": "string"
+      },
+      "user": {
+        "type": "string"
+      },
+      "password": {
+        "type": "string"
+      },
+      "nic_name": {
+        "type": "string"
+      }
+  },
+  "resources": [
+      {
+          "name": "[parameters('data_name')]",
+          "type": "Microsoft.Compute/disks",
+          "apiVersion": "2019-07-01",
+          "location": "[parameters('location')]",
+          "properties": {
+            "diskSizeGB": "[parameters('data_size')]",
+            "creationData": {
+                "createOption": "Empty"
+            }
+          },
+          "sku": {
+              "name": "Standard_LRS"
+          },
+          "copy": {
+              "name": "managedDiskResources",
+              "count": 1
+          },
+          "zones": [
+              "[parameters('zone')]"
+          ]
+      },
+      {
+        "name": "[parameters('diag_name')]",
+        "type": "Microsoft.Storage/storageAccounts",
+        "apiVersion": "2019-06-01",
+        "location": "[parameters('location')]",
+        "properties": {},
+        "kind": "Storage",
+        "sku": {
+            "name": "Standard_LRS"
+        }
+      },
+      {
+          "name": "[parameters('vm_name')]",
+          "type": "Microsoft.Compute/virtualMachines",
+          "apiVersion": "2019-07-01",
+          "location": "[parameters('location')]",
+          "dependsOn": [
+              "managedDiskResources",
+              "[concat('Microsoft.Network/networkInterfaces/', parameters('nic_name'))]",
+              "[concat('Microsoft.Storage/storageAccounts/', parameters('diag_name'))]"
+          ],
+          "properties": {
+              "hardwareProfile": {
+                  "vmSize": "[parameters('vm_size')]"
+              },
+              "storageProfile": {
+                  "osDisk": {
+                      "createOption": "FromImage",
+                      "managedDisk": {
+                          "storageAccountType": "Standard_LRS"
+                      }
+                  },
+                  "imageReference": {
+                      "publisher": "RedHat",
+                      "offer": "RHEL",
+                      "sku": "7.3",
+                      "version": "latest"
+                  },
+                  "copy": [
+                      {
+                          "name": "dataDisks",
+                          "count": "1",
+                          "input": {
+                              "lun": "0",
+                              "createOption": "attach",
+                              "caching": "ReadWrite",
+                              "writeAcceleratorEnabled": false,
+                              "diskSizeGB": null,
+                              "managedDisk": {
+                                  "id": "[resourceId('Microsoft.Compute/disks', parameters('nic_name'))]",
+                                  "storageAccountType": null,
+                                  "diskEncryptionSet": {
+                                      "id": null
+                                  }
+                              }
+                          }
+                      }
+                  ]
+              },
+              "networkProfile": {
+                  "networkInterfaces": [
+                      {
+                          "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
+                      }
+                  ]
+              },
+              "osProfile": {
+                  "computerName": "[parameters('vm_name')]",
+                  "adminUsername": "[parameters('user')]",
+                  "adminPassword": "[parameters('password')]"
+              },
+              "diagnosticsProfile": {
+                  "bootDiagnostics": {
+                      "enabled": true,
+                      "storageUri": "[concat('https://', parameters('diag_name'), '.blob.core.windows.net/')]"
+                  }
+              }
+          },
+          "zones": [
+              "[parameters('zone')]"
+          ]
+      }
+  ]
+}
