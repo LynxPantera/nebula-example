@@ -6,6 +6,12 @@ parameters:
     description: The ressource name of all ressources
   location:
     description: The location of the all ressource group
+  vm_size:
+    description: The VM size
+  zone:
+    description: The deployment zone
+  data_size:
+    description: The data size
 
 steps:
 - name: param1
@@ -245,4 +251,4 @@ steps:
         name: user
       password:
         $type: Secret
-        name: user
+        name: password
