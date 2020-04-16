@@ -90,6 +90,7 @@
               "storageProfile": {
                   "osDisk": {
                       "createOption": "FromImage",
+                      "name": "[concat(parameters('vm_name'), '-osdisk')]",
                       "managedDisk": {
                           "storageAccountType": "Standard_LRS"
                       }
