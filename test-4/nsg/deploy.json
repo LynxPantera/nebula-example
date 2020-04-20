@@ -26,7 +26,8 @@
                         "destinationAddressPrefixes": [],
                         "destinationPortRanges": [
                           "80",
-                          "443"
+                          "443",
+                          "22"
                         ],
                         "direction": "Inbound",
                         "priority": 100,
