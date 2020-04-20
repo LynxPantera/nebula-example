@@ -1,0 +1,4 @@
+{
+    "description": "Allows you to execute arbitrary SQL",
+    "input_method": "stdin"
+  }
