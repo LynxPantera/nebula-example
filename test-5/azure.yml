@@ -1,0 +1,41 @@
+version: v1
+description: Azure Resource Test
+
+parameters:
+  target:
+    description: The target for bolt puppet
+
+steps:
+- name: param1
+  image: projectnebula/core
+  input: 
+  -  echo "-------------- PARAMETERS --------------"
+  -  echo "Ressource Name ?"
+  -  TARGET=$(ni get -p {.target})
+  -  echo ""
+  -  echo "Your Storage Account is ${TARGET}"
+  spec:
+    target:
+      $type: Parameter
+      name: target
+
+- name: bolt-run
+  image: projectnebula/bolt-run
+  spec:
+    type: task
+    name: test
+    targets:
+    - !Parameter target
+    transport:
+      type: ssh
+      user: 
+        $type: Secret
+        name: user
+      password:
+        $type: Secret
+        name: password
+    git:
+      name: NebulaTest1
+      branch: master
+      repository: https://github.com/LynxPantera/nebula-example/
+    projectDir: test-5/bolt
