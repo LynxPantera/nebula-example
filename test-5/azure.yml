@@ -21,6 +21,7 @@ steps:
 
 - name: bolt-run
   image: projectnebula/bolt-run
+  dependsOn: param1
   spec:
     type: task
     name: test
@@ -38,4 +39,4 @@ steps:
       name: NebulaTest1
       branch: master
       repository: https://github.com/LynxPantera/nebula-example/
-    projectDir: test-5/bolt
+    projectDir: test-5
