@@ -4,15 +4,15 @@
     "parameters": {
         "vnet_name": {
             "type": "string",
-            "defaultValue": "vn-az-cu-lab"
+            "defaultValue": "vn-az-we-lab"
         },
         "subnet_name": {
             "type": "string",
-            "defaultValue": "sn-az-lab-nebula"
+            "defaultValue": "sn-az-lab-rlxcomv6"
         },
         "subnet_address": {
             "type": "string",
-            "defaultValue": "172.90.2.0/24"
+            "defaultValue": "172.27.5.0/24"
         },
         "location": {
             "type": "string",
@@ -30,4 +30,3 @@
             }
         }
     ]
-}

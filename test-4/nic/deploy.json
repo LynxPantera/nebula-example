@@ -33,7 +33,7 @@
                             "id": "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-', parameters('ressource_name'), '/providers/Microsoft.Network/publicIPAddresses/ip-az-lab-', parameters('ressource_name'))]"
                           },
                           "subnet": {
-                            "id": "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-rlx-author', '/providers/Microsoft.Network/virtualNetworks/vn-az-cu-lab/subnets/sn-az-lab-nebula')]"
+                            "id": "[concat('/subscriptions/', parameters('sub_id'), '/resourceGroups/rg-az-lab-rlx-author', '/providers/Microsoft.Network/virtualNetworks/vn-az-we-lab/subnets/sn-az-lab-rlxcomv6')]"
                           }
                       }
                   }
