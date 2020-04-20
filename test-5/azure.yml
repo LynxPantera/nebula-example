@@ -23,12 +23,14 @@ steps:
   image: projectnebula/bolt-run
   dependsOn: param1
   spec:
-    type: task
-    name: test
-    targets:
-    - !Parameter target
+    type: plan
+    name: test::test
+    projectDir: test-5/bolt/
+    installModules: true
+    targets: !Parameter target
     transport:
       type: ssh
+      verifyHost: false
       user: 
         $type: Secret
         name: user
@@ -39,4 +41,4 @@ steps:
       name: NebulaTest1
       branch: master
       repository: https://github.com/LynxPantera/nebula-example/
-    projectDir: test-5
+    
